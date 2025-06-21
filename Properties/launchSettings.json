@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MyStickyNotes": {
+      "commandName": "Project",
+      "commandLineArgs": "--root=C:\\dev\\data\\sticky-notes"
+    }
+  }
+}

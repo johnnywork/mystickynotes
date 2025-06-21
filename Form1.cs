@@ -7,20 +7,27 @@ namespace MyStickyNotes
 {
     public partial class frmMain : Form
     {
-        private FormsManager FormsManager;
-        private NotesManager NotesManager;
+        private FormsManager formsManager;
+        private NotesManager notesManager;
+        public string RootFolder { get; set; }
 
         public frmMain()
         {
             InitializeComponent();
 
-            FormsManager = new FormsManager();
-            NotesManager = new NotesManager();
+            formsManager = new FormsManager();
         }
 
         private void frmMain_Load(object sender, EventArgs e)
         {
             MdiScroller.Install(this);
+
+            if (RootFolder == null)
+            {
+                RootFolder = Application.StartupPath;
+            }
+
+            notesManager = new NotesManager(RootFolder);
         }
 
         private void refreshTree()
@@ -32,9 +39,9 @@ namespace MyStickyNotes
             tn.Text = "Active";
 
             tvNotes.Nodes.Add(tn);
-            for (int i = 0; i < FormsManager.count(); i++)
+            for (int i = 0; i < formsManager.count(); i++)
             {
-                FormEnhancedStickyNote frm = FormsManager.get(i);
+                FormEnhancedStickyNote frm = formsManager.get(i);
 
                 TreeNode nn = new TreeNode();
                 nn.Name = "active_node_" + frm.GetHashCode();
@@ -51,9 +58,9 @@ namespace MyStickyNotes
         {
             StickyNoteContent noteContent = new StickyNoteContent();
 
-            FormEnhancedStickyNote frmNote = new FormEnhancedStickyNote(noteContent, NotesManager);
+            FormEnhancedStickyNote frmNote = new FormEnhancedStickyNote(noteContent, notesManager);
             frmNote.StickyNoteSaved += FrmNote_StickyNoteSaved;
-            FormsManager.add(frmNote);
+            formsManager.add(frmNote);
 
             frmNote.MdiParent = this;
             frmNote.Show();
@@ -68,12 +75,12 @@ namespace MyStickyNotes
 
         private void miArrange_Click(object sender, EventArgs e)
         {
-            int middle = FormsManager.count() / 2;
+            int middle = formsManager.count() / 2;
             int heightCount = 0;
             int maxLeft = 0;
             for (int i = 0; i < middle; i++)
             {
-                FormEnhancedStickyNote frm = FormsManager.get(i);
+                FormEnhancedStickyNote frm = formsManager.get(i);
                 frm.Top = heightCount;
                 frm.Left = 0;
 
@@ -82,9 +89,9 @@ namespace MyStickyNotes
             }
 
             heightCount = 0;
-            for (int i = middle; i < FormsManager.count(); i++)
+            for (int i = middle; i < formsManager.count(); i++)
             {
-                FormEnhancedStickyNote frm = FormsManager.get(i);
+                FormEnhancedStickyNote frm = formsManager.get(i);
                 frm.Top = heightCount;
                 frm.Left = maxLeft;
 

@@ -1,12 +1,88 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\dev\\ws-source\\MyStickyNotes\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{686EA4D3-6FF2-464B-B514-7E7406840D95}|MyStickyNotes.csproj|c:\\dev\\ws-source\\mystickynotes\\services\\notesmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{686EA4D3-6FF2-464B-B514-7E7406840D95}|MyStickyNotes.csproj|solutionrelative:services\\notesmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{686EA4D3-6FF2-464B-B514-7E7406840D95}|MyStickyNotes.csproj|c:\\dev\\ws-source\\mystickynotes\\models\\stickynotecontent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{686EA4D3-6FF2-464B-B514-7E7406840D95}|MyStickyNotes.csproj|solutionrelative:models\\stickynotecontent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{686EA4D3-6FF2-464B-B514-7E7406840D95}|MyStickyNotes.csproj|c:\\dev\\ws-source\\mystickynotes\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{686EA4D3-6FF2-464B-B514-7E7406840D95}|MyStickyNotes.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{686EA4D3-6FF2-464B-B514-7E7406840D95}|MyStickyNotes.csproj|c:\\dev\\ws-source\\mystickynotes\\utils\\xmlutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{686EA4D3-6FF2-464B-B514-7E7406840D95}|MyStickyNotes.csproj|solutionrelative:utils\\xmlutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StickyNoteContent.cs",
+              "DocumentMoniker": "C:\\dev\\ws-source\\MyStickyNotes\\models\\StickyNoteContent.cs",
+              "RelativeDocumentMoniker": "models\\StickyNoteContent.cs",
+              "ToolTip": "C:\\dev\\ws-source\\MyStickyNotes\\models\\StickyNoteContent.cs",
+              "RelativeToolTip": "models\\StickyNoteContent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T11:35:12.511Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "NotesManager.cs",
+              "DocumentMoniker": "C:\\dev\\ws-source\\MyStickyNotes\\services\\NotesManager.cs",
+              "RelativeDocumentMoniker": "services\\NotesManager.cs",
+              "ToolTip": "C:\\dev\\ws-source\\MyStickyNotes\\services\\NotesManager.cs",
+              "RelativeToolTip": "services\\NotesManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T11:21:22.617Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "XMLUtils.cs",
+              "DocumentMoniker": "C:\\dev\\ws-source\\MyStickyNotes\\utils\\XMLUtils.cs",
+              "RelativeDocumentMoniker": "utils\\XMLUtils.cs",
+              "ToolTip": "C:\\dev\\ws-source\\MyStickyNotes\\utils\\XMLUtils.cs",
+              "RelativeToolTip": "utils\\XMLUtils.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T11:23:26.971Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\dev\\ws-source\\MyStickyNotes\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\dev\\ws-source\\MyStickyNotes\\Form1.cs",
+              "RelativeToolTip": "Form1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T11:09:06.953Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
