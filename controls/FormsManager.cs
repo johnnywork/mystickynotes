@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MyStickyNotes.models;
+using MyStickyNotes.services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,16 +10,48 @@ namespace MyStickyNotes.controls
 {
     internal class FormsManager
     {
-        private List<FormEnhancedStickyNote> noteForms { get; set; }
+        private NotesManager notesManager;
+        private Form mdiParent;
+        private List<FormEnhancedStickyNote> noteForms;
 
-        public FormsManager()
+        public FormsManager(Form mdiParent, NotesManager notesManager)
         {
-            noteForms = new List<FormEnhancedStickyNote>(50);
+            this.mdiParent = mdiParent;
+            this.noteForms = new List<FormEnhancedStickyNote>(50);
+            this.notesManager = notesManager;
         }
 
-        public void add(FormEnhancedStickyNote frmNote)
+        public void suspendLayout()
         {
+            foreach (FormEnhancedStickyNote frm in noteForms)
+            {
+                frm.SuspendLayout();
+            }
+        }
+        public void resumeLayout()
+        {
+            foreach (FormEnhancedStickyNote frm in noteForms)
+            {
+                frm.ResumeLayout(false);
+            }
+        }
+
+        public FormEnhancedStickyNote createNoteForm(StickyNoteContent noteContent)
+        {
+            FormEnhancedStickyNote frmNote = new FormEnhancedStickyNote(noteContent, notesManager);
+            frmNote.MdiParent = this.mdiParent;
+
             noteForms.Add(frmNote);
+
+            return frmNote;
+        }
+
+        public void createNoteForms(List<StickyNoteContent> notes)
+        {
+            foreach (StickyNoteContent note in notes) 
+            { 
+                createNoteForm(note);
+            }
         }
 
         public int count()

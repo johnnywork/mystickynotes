@@ -44,8 +44,10 @@ namespace MyStickyNotes.controls
 
         private void init()
         {
-            this.txtContent.Text = this.NoteContent.FormattedText;
+            this.txtContent.Rtf = this.NoteContent.FormattedText;
             this.txtTitle.Text = this.NoteContent.Title;
+            this.txtTitle.SelectionStart = 0;
+            this.txtTitle.SelectionLength = 0;
         }
 
         private void FormEnhancedStickyNote_Load(object sender, EventArgs e)

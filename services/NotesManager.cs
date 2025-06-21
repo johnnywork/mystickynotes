@@ -19,6 +19,23 @@ namespace MyStickyNotes.services
             this.rootFolder = rootFolder;
         }        
 
+        public List<StickyNoteContent> loadNotes()
+        {
+            List<string> files = Directory.EnumerateFiles(rootFolder, "*.xml").ToList();
+            List<StickyNoteContent> result = new List<StickyNoteContent>();
+
+            foreach (string file in files)
+            {
+                StickyNoteContent note = xmlUtils.safeDeserialize< StickyNoteContent>(File.ReadAllText(file));
+                if (note != null)
+                {
+                    result.Add(note);
+                }
+            }
+
+            return result;
+        }
+
         public void saveNote(StickyNoteContent note)
         {
             string xml = xmlUtils.serialize(note);

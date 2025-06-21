@@ -22,11 +22,23 @@ namespace MyStickyNotes.utils
             return Encoding.UTF8.GetString(stream.ToArray()); 
         }
 
-        public T deserialize<T>(Type objType, string xml)
+        public T deserialize<T>(string xml)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             T obj = (T) serializer.Deserialize(new MemoryStream(Encoding.UTF8.GetBytes(xml)));
             return obj;
+        }
+
+        public T safeDeserialize<T>(string xml)
+        {
+            try
+            {
+                return deserialize<T>(xml);
+            }
+            catch (Exception)
+            {
+                return default(T);
+            }
         }
     }
 }

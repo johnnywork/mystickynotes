@@ -11,10 +11,10 @@ namespace MyStickyNotes.models
         public StickyNoteContent() 
         { 
             CreatedAt = DateTime.Now;
-            ID = CreatedAt.GetHashCode().ToString() + "_"+ CreatedAt.ToString("yyyy_mm_dd");
+            ID = CreatedAt.ToOADate().ToString() + "_"+ CreatedAt.ToString("yyyy_mm_dd");
         }
 
-        public string ID { get;  }
+        public string ID { get; set; }
         public string? PlainText { get; set; }
         public string? FormattedText { get; set; }
 

@@ -62,6 +62,7 @@
             // 
             tvNotes.BorderStyle = BorderStyle.FixedSingle;
             tvNotes.Dock = DockStyle.Right;
+            tvNotes.Font = new Font("Courier New", 9F);
             tvNotes.Location = new Point(1017, 24);
             tvNotes.Name = "tvNotes";
             tvNotes.Size = new Size(187, 766);
