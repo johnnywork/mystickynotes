@@ -132,6 +132,11 @@ namespace MyStickyNotes.controls
             {
                 handleUnderline();
             }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                this.WindowState = this.WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
+            }
+
         }
     }
 }
