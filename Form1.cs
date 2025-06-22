@@ -64,14 +64,22 @@ namespace MyStickyNotes
         {
             tvNotes.Nodes.Clear();
 
+            SortedList<string, FormEnhancedStickyNote> sortedByname = new SortedList<string, FormEnhancedStickyNote>();
+
             TreeNode tn = new TreeNode();
             tn.Name = "active_notes";
             tn.Text = "Active";
 
+            //add active
             tvNotes.Nodes.Add(tn);
             for (int i = 0; i < formsManager.count(); i++)
             {
                 FormEnhancedStickyNote frm = formsManager.get(i);
+                if (frm.NoteContent.Title == null)
+                {
+                    continue;
+                }
+                sortedByname.Add(frm.NoteContent.Title, frm);
 
                 TreeNode nn = new TreeNode();
                 nn.Name = "active_node_" + frm.GetHashCode();
@@ -83,6 +91,23 @@ namespace MyStickyNotes
                 {
                     frm.Show();
                 }
+            }
+
+            //add by title
+            TreeNode tnByName = new TreeNode();
+            tnByName.Name = "active_notes_by_name";
+            tnByName.Text = "Active by name";
+
+            tvNotes.Nodes.Add(tnByName);
+            for (int i = 0; i < sortedByname.Count; i++)
+            {
+                FormEnhancedStickyNote frm = sortedByname.GetValueAtIndex(i);
+
+                TreeNode nn = new TreeNode();
+                nn.Name = "active_node_by_name_" + frm.GetHashCode();
+                nn.Text = frm.NoteContent.Title;
+                nn.Tag = frm;
+                tnByName.Nodes.Add(nn);
             }
 
             tn.ExpandAll();
