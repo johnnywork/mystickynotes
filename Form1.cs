@@ -2,6 +2,7 @@ using MyStickyNotes.controls;
 using MyStickyNotes.models;
 using MyStickyNotes.services;
 using System.Collections;
+using System.Windows.Forms;
 
 namespace MyStickyNotes
 {
@@ -62,13 +63,17 @@ namespace MyStickyNotes
 
         private void refreshTree(bool showForms)
         {
+            tvNotes.BackColor = Color.LightYellow;
             tvNotes.Nodes.Clear();
 
             SortedList<string, FormEnhancedStickyNote> sortedByname = new SortedList<string, FormEnhancedStickyNote>();
 
+            tvNotes.BeginUpdate();
+
             TreeNode tn = new TreeNode();
             tn.Name = "active_notes";
             tn.Text = "Active";
+            tn.NodeFont = new Font(tvNotes.Font.FontFamily, 11, FontStyle.Bold);
 
             //add active
             tvNotes.Nodes.Add(tn);
@@ -97,6 +102,7 @@ namespace MyStickyNotes
             TreeNode tnByName = new TreeNode();
             tnByName.Name = "active_notes_by_name";
             tnByName.Text = "Active by name";
+            tnByName.NodeFont = new Font(tvNotes.Font.FontFamily, 11, FontStyle.Bold);
 
             tvNotes.Nodes.Add(tnByName);
             for (int i = 0; i < sortedByname.Count; i++)
@@ -110,7 +116,11 @@ namespace MyStickyNotes
                 tnByName.Nodes.Add(nn);
             }
 
-            tn.ExpandAll();
+            //tn.ExpandAll();
+            //tnByName.ExpandAll();
+
+            tvNotes.ExpandAll();
+            tvNotes.EndUpdate();
         }
 
         private void createNewNote()
@@ -123,40 +133,69 @@ namespace MyStickyNotes
 
         private void arrange(bool showForms)
         {
-            int middle = formsManager.count() / 2;
+            int numOfColumns = 3;
+
+            int middle = formsManager.count() / numOfColumns;
             int heightCount = 0;
-            int maxLeft = 0;
-            for (int i = 0; i < middle; i++)
+            int columnLeft = 0;
+            int columnMaxLeft = 0;
+            for (int iColumn = 0; iColumn <= numOfColumns; iColumn++)
             {
-                FormEnhancedStickyNote frm = formsManager.get(i);
-
-                if (showForms)
+                heightCount = 0;
+                columnLeft += columnMaxLeft;
+                columnMaxLeft = 0;
+                for (int i =0; i < middle; i++)
                 {
-                    frm.Show();
+                    int formToGet = i + (iColumn * middle);
+                    if (formToGet >= formsManager.count())
+                    {
+                        break;
+                    }
+                    FormEnhancedStickyNote frm = formsManager.get(formToGet);
+                    if (showForms)
+                    {
+                        frm.Show();
+                    }
+
+                    frm.Top = heightCount;
+                    frm.Left = columnLeft;
+
+                    heightCount += frm.Height;
+                    columnMaxLeft = frm.Width > columnMaxLeft ? frm.Width : columnMaxLeft;
                 }
-
-                frm.Top = heightCount;
-                frm.Left = 0;
-
-
-                heightCount += frm.Height;
-                maxLeft = frm.Width > maxLeft ? frm.Width : maxLeft;
             }
 
-            heightCount = 0;
-            for (int i = middle; i < formsManager.count(); i++)
-            {
-                FormEnhancedStickyNote frm = formsManager.get(i);
-                if (showForms)
-                {
-                    frm.Show();
-                }
+            //for (int i = 0; i < middle; i++)
+            //{
+            //    FormEnhancedStickyNote frm = formsManager.get(i);
 
-                frm.Top = heightCount;
-                frm.Left = maxLeft;
+            //    if (showForms)
+            //    {
+            //        frm.Show();
+            //    }
 
-                heightCount += frm.Height;
-            }
+            //    frm.Top = heightCount;
+            //    frm.Left = 0;
+
+
+            //    heightCount += frm.Height;
+            //    maxLeft = frm.Width > maxLeft ? frm.Width : maxLeft;
+            //}
+
+            //heightCount = 0;
+            //for (int i = middle; i < formsManager.count(); i++)
+            //{
+            //    FormEnhancedStickyNote frm = formsManager.get(i);
+            //    if (showForms)
+            //    {
+            //        frm.Show();
+            //    }
+
+            //    frm.Top = heightCount;
+            //    frm.Left = maxLeft;
+
+            //    heightCount += frm.Height;
+            //}
         }
     }
 }
