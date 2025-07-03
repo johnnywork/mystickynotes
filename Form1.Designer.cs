@@ -32,7 +32,10 @@
             miNewNote = new ToolStripMenuItem();
             miArrange = new ToolStripMenuItem();
             tvNotes = new TreeView();
+            panel1 = new Panel();
+            txtFilterNode = new TextBox();
             menuMain.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // menuMain
@@ -61,20 +64,40 @@
             // tvNotes
             // 
             tvNotes.BorderStyle = BorderStyle.FixedSingle;
-            tvNotes.Dock = DockStyle.Right;
+            tvNotes.Dock = DockStyle.Fill;
             tvNotes.Font = new Font("Courier New", 9F);
-            tvNotes.Location = new Point(1010, 24);
+            tvNotes.Location = new Point(0, 23);
             tvNotes.Name = "tvNotes";
-            tvNotes.Size = new Size(194, 766);
+            tvNotes.Size = new Size(228, 743);
             tvNotes.TabIndex = 2;
             tvNotes.NodeMouseDoubleClick += tvNotes_NodeMouseDoubleClick;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(tvNotes);
+            panel1.Controls.Add(txtFilterNode);
+            panel1.Dock = DockStyle.Right;
+            panel1.Location = new Point(976, 24);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(228, 766);
+            panel1.TabIndex = 4;
+            // 
+            // txtFilterNode
+            // 
+            txtFilterNode.BorderStyle = BorderStyle.FixedSingle;
+            txtFilterNode.Dock = DockStyle.Top;
+            txtFilterNode.Location = new Point(0, 0);
+            txtFilterNode.Name = "txtFilterNode";
+            txtFilterNode.Size = new Size(228, 23);
+            txtFilterNode.TabIndex = 3;
+            txtFilterNode.TextChanged += txtFilterNode_TextChanged;
             // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1204, 790);
-            Controls.Add(tvNotes);
+            Controls.Add(panel1);
             Controls.Add(menuMain);
             IsMdiContainer = true;
             MainMenuStrip = menuMain;
@@ -84,6 +107,8 @@
             Load += frmMain_Load;
             menuMain.ResumeLayout(false);
             menuMain.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -94,5 +119,7 @@
         private ToolStripMenuItem miNewNote;
         private ToolStripMenuItem miArrange;
         private TreeView tvNotes;
+        private Panel panel1;
+        private TextBox txtFilterNode;
     }
 }

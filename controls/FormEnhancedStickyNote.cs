@@ -37,6 +37,11 @@ namespace MyStickyNotes.controls
             this.NotesManager = notesManager;
         }
 
+        public void focusForEdit()
+        {
+            this.txtContent.Focus();
+        }
+
         protected virtual void OnNoteSaved(StickyNoteSavedEventArgs e)
         {
             StickyNoteSaved?.Invoke(this, e);

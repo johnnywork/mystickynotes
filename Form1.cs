@@ -56,9 +56,10 @@ namespace MyStickyNotes
             if (e.Node == null) return;
             if (e.Node.Tag == null) return;
 
-            Form frm = (Form)e.Node.Tag;
-            frm.WindowState = frm.WindowState == FormWindowState.Maximized? FormWindowState.Normal: FormWindowState.Maximized;
+            FormEnhancedStickyNote frm = (FormEnhancedStickyNote)e.Node.Tag;
+            frm.WindowState = frm.WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
             frm.Show();
+            frm.focusForEdit();
         }
 
         private void refreshTree(bool showForms)
@@ -76,7 +77,6 @@ namespace MyStickyNotes
             tn.NodeFont = new Font(tvNotes.Font.FontFamily, 11, FontStyle.Bold);
 
             //add active
-            tvNotes.Nodes.Add(tn);
             for (int i = 0; i < formsManager.count(); i++)
             {
                 FormEnhancedStickyNote frm = formsManager.get(i);
@@ -104,7 +104,6 @@ namespace MyStickyNotes
             tnByName.Text = "Active by name";
             tnByName.NodeFont = new Font(tvNotes.Font.FontFamily, 11, FontStyle.Bold);
 
-            tvNotes.Nodes.Add(tnByName);
             for (int i = 0; i < sortedByname.Count; i++)
             {
                 FormEnhancedStickyNote frm = sortedByname.GetValueAtIndex(i);
@@ -116,8 +115,8 @@ namespace MyStickyNotes
                 tnByName.Nodes.Add(nn);
             }
 
-            //tn.ExpandAll();
-            //tnByName.ExpandAll();
+            tvNotes.Nodes.Add(tnByName);
+            tvNotes.Nodes.Add(tn);
 
             tvNotes.ExpandAll();
             tvNotes.EndUpdate();
@@ -144,7 +143,7 @@ namespace MyStickyNotes
                 heightCount = 0;
                 columnLeft += columnMaxLeft;
                 columnMaxLeft = 0;
-                for (int i =0; i < middle; i++)
+                for (int i = 0; i < middle; i++)
                 {
                     int formToGet = i + (iColumn * middle);
                     if (formToGet >= formsManager.count())
@@ -196,6 +195,38 @@ namespace MyStickyNotes
 
             //    heightCount += frm.Height;
             //}
+        }
+
+        private void txtFilterNode_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string criteria = txtFilterNode.Text.Trim();
+                TreeNode rootNode = tvNotes.Nodes[0];
+
+                foreach (TreeNode node in rootNode.Nodes)
+                {
+                    if (criteria.Length > 0)
+                    {
+                        if (node.Text.IndexOf(criteria) > -1)
+                        {
+                            node.ForeColor = Color.Red;
+                            node.NodeFont = new Font(tvNotes.Font, FontStyle.Bold);
+                        }
+                        else
+                        {
+                            node.ForeColor = tvNotes.ForeColor;
+                            node.NodeFont = new Font(tvNotes.Font, FontStyle.Regular);
+                        }
+                    }
+                    else
+                    {
+                        node.ForeColor = tvNotes.ForeColor;
+                        node.NodeFont = new Font(tvNotes.Font, FontStyle.Regular);
+                    }
+                }
+            }
+            catch (Exception ex){}
         }
     }
 }
