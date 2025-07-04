@@ -208,7 +208,7 @@ namespace MyStickyNotes
                 {
                     if (criteria.Length > 0)
                     {
-                        if (node.Text.IndexOf(criteria) > -1)
+                        if (node.Text.IndexOf(criteria, StringComparison.CurrentCultureIgnoreCase) > -1)
                         {
                             node.ForeColor = Color.Red;
                             node.NodeFont = new Font(tvNotes.Font, FontStyle.Bold);
