@@ -91,6 +91,7 @@
             txtFilterNode.Size = new Size(228, 23);
             txtFilterNode.TabIndex = 3;
             txtFilterNode.TextChanged += txtFilterNode_TextChanged;
+            txtFilterNode.KeyDown += txtFilterNode_KeyDown;
             // 
             // frmMain
             // 

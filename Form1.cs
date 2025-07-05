@@ -12,6 +12,10 @@ namespace MyStickyNotes
         private NotesManager notesManager;
         public string RootFolder { get; set; }
 
+        private static Font FONT_REGULAR_TREE = new Font("Courier New", 9, FontStyle.Regular);
+        private static Font FONT_REGULAR_TREEROOT = new Font("Courier New", 10, FontStyle.Bold);
+        private static Font FONT_FILTERED_NODE = new Font("Courier New", 9, FontStyle.Bold);
+
         public frmMain()
         {
             InitializeComponent();
@@ -33,6 +37,8 @@ namespace MyStickyNotes
             refreshTree(false);
 
             arrange(true);
+
+            txtFilterNode.Focus();
         }
 
         private void miNewNote_Click(object sender, EventArgs e)
@@ -56,7 +62,64 @@ namespace MyStickyNotes
             if (e.Node == null) return;
             if (e.Node.Tag == null) return;
 
-            FormEnhancedStickyNote frm = (FormEnhancedStickyNote)e.Node.Tag;
+            maximizeForm((FormEnhancedStickyNote)e.Node.Tag);
+        }
+
+        private void txtFilterNode_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string criteria = txtFilterNode.Text.Trim();
+                TreeNode rootNode = tvNotes.Nodes[0];
+                txtFilterNode.Tag = null;
+
+                foreach (TreeNode node in rootNode.Nodes)
+                {
+                    if (criteria.Length > 0)
+                    {
+                        if (node.Text.IndexOf(criteria, StringComparison.CurrentCultureIgnoreCase) > -1)
+                        {
+                            node.ForeColor = Color.Red;
+                            node.NodeFont = FONT_FILTERED_NODE;
+                            txtFilterNode.Tag = node.Tag;
+                        }
+                        else
+                        {
+                            node.ForeColor = tvNotes.ForeColor;
+                            node.NodeFont = FONT_REGULAR_TREE;
+                        }
+                    }
+                    else
+                    {
+                        node.ForeColor = tvNotes.ForeColor;
+                        node.NodeFont = FONT_REGULAR_TREE;
+                    }
+                }
+            }
+            catch (Exception ex) { }
+        }
+
+        private void txtFilterNode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (txtFilterNode.Tag != null)
+                {
+                    maximizeForm((FormEnhancedStickyNote) txtFilterNode.Tag);
+                }
+            }
+            else if(e.KeyCode == Keys.Escape)
+            {
+                txtFilterNode.Text = "";
+            }
+        }
+
+        //--------------------------------------------------------------------------------
+        // LOCAL METHODS
+        //--------------------------------------------------------------------------------
+
+        private void maximizeForm(FormEnhancedStickyNote frm)
+        {
             frm.WindowState = frm.WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
             frm.Show();
             frm.focusForEdit();
@@ -74,7 +137,7 @@ namespace MyStickyNotes
             TreeNode tn = new TreeNode();
             tn.Name = "active_notes";
             tn.Text = "Active";
-            tn.NodeFont = new Font(tvNotes.Font.FontFamily, 11, FontStyle.Bold);
+            tn.NodeFont = FONT_REGULAR_TREEROOT;
 
             //add active
             for (int i = 0; i < formsManager.count(); i++)
@@ -90,6 +153,7 @@ namespace MyStickyNotes
                 nn.Name = "active_node_" + frm.GetHashCode();
                 nn.Text = frm.NoteContent.Title;
                 nn.Tag = frm;
+                nn.NodeFont = FONT_REGULAR_TREE;
                 tn.Nodes.Add(nn);
 
                 if (showForms)
@@ -102,7 +166,7 @@ namespace MyStickyNotes
             TreeNode tnByName = new TreeNode();
             tnByName.Name = "active_notes_by_name";
             tnByName.Text = "Active by name";
-            tnByName.NodeFont = new Font(tvNotes.Font.FontFamily, 11, FontStyle.Bold);
+            tnByName.NodeFont = FONT_REGULAR_TREEROOT;
 
             for (int i = 0; i < sortedByname.Count; i++)
             {
@@ -112,6 +176,7 @@ namespace MyStickyNotes
                 nn.Name = "active_node_by_name_" + frm.GetHashCode();
                 nn.Text = frm.NoteContent.Title;
                 nn.Tag = frm;
+                nn.NodeFont = FONT_REGULAR_TREE;
                 tnByName.Nodes.Add(nn);
             }
 
@@ -163,70 +228,6 @@ namespace MyStickyNotes
                     columnMaxLeft = frm.Width > columnMaxLeft ? frm.Width : columnMaxLeft;
                 }
             }
-
-            //for (int i = 0; i < middle; i++)
-            //{
-            //    FormEnhancedStickyNote frm = formsManager.get(i);
-
-            //    if (showForms)
-            //    {
-            //        frm.Show();
-            //    }
-
-            //    frm.Top = heightCount;
-            //    frm.Left = 0;
-
-
-            //    heightCount += frm.Height;
-            //    maxLeft = frm.Width > maxLeft ? frm.Width : maxLeft;
-            //}
-
-            //heightCount = 0;
-            //for (int i = middle; i < formsManager.count(); i++)
-            //{
-            //    FormEnhancedStickyNote frm = formsManager.get(i);
-            //    if (showForms)
-            //    {
-            //        frm.Show();
-            //    }
-
-            //    frm.Top = heightCount;
-            //    frm.Left = maxLeft;
-
-            //    heightCount += frm.Height;
-            //}
-        }
-
-        private void txtFilterNode_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                string criteria = txtFilterNode.Text.Trim();
-                TreeNode rootNode = tvNotes.Nodes[0];
-
-                foreach (TreeNode node in rootNode.Nodes)
-                {
-                    if (criteria.Length > 0)
-                    {
-                        if (node.Text.IndexOf(criteria, StringComparison.CurrentCultureIgnoreCase) > -1)
-                        {
-                            node.ForeColor = Color.Red;
-                            node.NodeFont = new Font(tvNotes.Font, FontStyle.Bold);
-                        }
-                        else
-                        {
-                            node.ForeColor = tvNotes.ForeColor;
-                            node.NodeFont = new Font(tvNotes.Font, FontStyle.Regular);
-                        }
-                    }
-                    else
-                    {
-                        node.ForeColor = tvNotes.ForeColor;
-                        node.NodeFont = new Font(tvNotes.Font, FontStyle.Regular);
-                    }
-                }
-            }
-            catch (Exception ex){}
         }
     }
 }

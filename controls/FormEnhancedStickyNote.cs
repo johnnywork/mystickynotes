@@ -37,15 +37,94 @@ namespace MyStickyNotes.controls
             this.NotesManager = notesManager;
         }
 
-        public void focusForEdit()
+        //--------------------------------------------------------------------------------
+        // CONTROL METHODS
+        //--------------------------------------------------------------------------------
+
+        private void FormEnhancedStickyNote_Load(object sender, EventArgs e)
         {
-            this.txtContent.Focus();
+            init();
         }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            save();
+        }
+
+        private void txtContent_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Process p = new();
+            p.StartInfo.UseShellExecute = true;
+            p.StartInfo.FileName = "chrome.exe";
+            p.StartInfo.Arguments = e.LinkText;
+            p.Start();
+        }
+
+        private void txtContent_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.S && e.Control)
+            {
+                save();
+            }
+            else if (e.KeyCode == Keys.B && e.Control)
+            {
+                handleBold();
+            }
+            else if (e.KeyCode == Keys.U && e.Control)
+            {
+                handleUnderline();
+            }
+            if (e.KeyCode == Keys.G && e.Control)
+            {
+                handleGreenText();
+            }
+            if (e.KeyCode == Keys.R && e.Control)
+            {
+                handleRedText();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                this.WindowState = this.WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
+            }
+        }
+
+        private void handleGreenText()
+        {
+            if (this.txtContent.SelectionColor != Color.Green)
+            {
+                this.txtContent.SelectionColor = Color.Green;
+            }
+            else
+            {
+                this.txtContent.SelectionColor = Color.Black;
+            }
+        }
+
+        private void handleRedText()
+        {
+            if (this.txtContent.SelectionColor != Color.Red)
+            {
+                this.txtContent.SelectionColor = Color.Red;
+            }
+            else
+            {
+                this.txtContent.SelectionColor = Color.Black;
+            }
+        }
+
+        //--------------------------------------------------------------------------------
+        // EVENT METHODS
+        //--------------------------------------------------------------------------------
 
         protected virtual void OnNoteSaved(StickyNoteSavedEventArgs e)
         {
             StickyNoteSaved?.Invoke(this, e);
         }
+
+        //--------------------------------------------------------------------------------
+        // LOCAL METHODS
+        //--------------------------------------------------------------------------------
 
         private void init()
         {
@@ -55,9 +134,9 @@ namespace MyStickyNotes.controls
             this.txtTitle.SelectionLength = 0;
         }
 
-        private void FormEnhancedStickyNote_Load(object sender, EventArgs e)
+        public void focusForEdit()
         {
-            init();
+            this.txtContent.Focus();
         }
 
         private void save()
@@ -92,6 +171,7 @@ namespace MyStickyNotes.controls
             
             this.txtContent.SelectionFont = toApply;
         }
+
         private void handleUnderline()
         {
             Font existing = this.txtContent.SelectionFont;
@@ -109,39 +189,5 @@ namespace MyStickyNotes.controls
             this.txtContent.SelectionFont = toApply;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            save();
-        }
-
-        private void txtContent_LinkClicked(object sender, LinkClickedEventArgs e)
-        {
-            Process p = new();
-            p.StartInfo.UseShellExecute = true;
-            p.StartInfo.FileName = "chrome.exe";
-            p.StartInfo.Arguments = e.LinkText;
-            p.Start();
-        }
-
-        private void txtContent_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.S && e.Control)
-            {
-                save();
-            }
-            else if (e.KeyCode == Keys.B && e.Control)
-            {
-                handleBold();
-            }
-            else if (e.KeyCode == Keys.U && e.Control)
-            {
-                handleUnderline();
-            }
-            else if (e.KeyCode == Keys.Escape)
-            {
-                this.WindowState = this.WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
-            }
-
-        }
     }
 }
