@@ -23,6 +23,8 @@ namespace MyStickyNotes
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            this.SuspendLayout();
+
             MdiScroller.Install(this);
 
             if (RootFolder == null)
@@ -38,6 +40,8 @@ namespace MyStickyNotes
 
             arrange(true);
 
+            this.ResumeLayout();
+
             txtFilterNode.Focus();
         }
 
@@ -47,7 +51,7 @@ namespace MyStickyNotes
             refreshTree(false);
         }
 
-        private void FrmNote_StickyNoteSaved(object? sender, EventArgs e)
+        public void FrmNote_StickyNoteSaved(object? sender, EventArgs e)
         {
             refreshTree(false);
         }
@@ -127,12 +131,12 @@ namespace MyStickyNotes
 
         private void refreshTree(bool showForms)
         {
+            tvNotes.BeginUpdate();
+
             tvNotes.BackColor = Color.LightYellow;
             tvNotes.Nodes.Clear();
 
             SortedList<string, FormEnhancedStickyNote> sortedByname = new SortedList<string, FormEnhancedStickyNote>();
-
-            tvNotes.BeginUpdate();
 
             TreeNode tn = new TreeNode();
             tn.Name = "active_notes";
@@ -143,11 +147,19 @@ namespace MyStickyNotes
             for (int i = 0; i < formsManager.count(); i++)
             {
                 FormEnhancedStickyNote frm = formsManager.get(i);
+                
+                //check for valid title to sort
                 if (frm.NoteContent.Title == null)
                 {
                     continue;
                 }
                 sortedByname.Add(frm.NoteContent.Title, frm);
+
+                //check for archive status
+                if (frm.NoteContent.IsArchived)
+                {
+                    continue;
+                }
 
                 TreeNode nn = new TreeNode();
                 nn.Name = "active_node_" + frm.GetHashCode();
@@ -171,6 +183,10 @@ namespace MyStickyNotes
             for (int i = 0; i < sortedByname.Count; i++)
             {
                 FormEnhancedStickyNote frm = sortedByname.GetValueAtIndex(i);
+                if (frm.NoteContent.Title == null || frm.NoteContent.IsArchived)
+                {
+                    continue;
+                }
 
                 TreeNode nn = new TreeNode();
                 nn.Name = "active_node_by_name_" + frm.GetHashCode();
@@ -180,10 +196,34 @@ namespace MyStickyNotes
                 tnByName.Nodes.Add(nn);
             }
 
+            //add archived
+            TreeNode tnArchived = new TreeNode();
+            tnArchived.Name = "àrchived_notes_by_name";
+            tnArchived.Text = "Archived by name";
+            tnArchived.NodeFont = FONT_REGULAR_TREEROOT;
+
+            for (int i = 0; i < sortedByname.Count; i++)
+            {
+                FormEnhancedStickyNote frm = sortedByname.GetValueAtIndex(i);
+                if (!frm.NoteContent.IsArchived)
+                {
+                    continue;
+                }
+
+                TreeNode nn = new TreeNode();
+                nn.Name = "àrchived_note_by_name" + frm.GetHashCode();
+                nn.Text = frm.NoteContent.Title;
+                nn.Tag = frm;
+                nn.NodeFont = FONT_REGULAR_TREE;
+                tnArchived.Nodes.Add(nn);
+            }
+
             tvNotes.Nodes.Add(tnByName);
             tvNotes.Nodes.Add(tn);
+            tvNotes.Nodes.Add(tnArchived);
 
             tvNotes.ExpandAll();
+
             tvNotes.EndUpdate();
         }
 

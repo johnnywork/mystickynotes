@@ -44,6 +44,8 @@ namespace MyStickyNotes.controls
         private void FormEnhancedStickyNote_Load(object sender, EventArgs e)
         {
             init();
+
+            adjustArchivalText();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -89,27 +91,25 @@ namespace MyStickyNotes.controls
             }
         }
 
-        private void handleGreenText()
+        private void btnManageArchival_Click(object sender, EventArgs e)
         {
-            if (this.txtContent.SelectionColor != Color.Green)
+            try
             {
-                this.txtContent.SelectionColor = Color.Green;
-            }
-            else
-            {
-                this.txtContent.SelectionColor = Color.Black;
-            }
-        }
+                if (NoteContent.IsArchived)
+                {
+                    NoteContent.IsArchived = false;
+                }
+                else
+                {
+                    NoteContent.IsArchived = true;
+                }
 
-        private void handleRedText()
-        {
-            if (this.txtContent.SelectionColor != Color.Red)
-            {
-                this.txtContent.SelectionColor = Color.Red;
+                save();
+                adjustArchivalText();
             }
-            else
+            catch (Exception ex)
             {
-                this.txtContent.SelectionColor = Color.Black;
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -152,7 +152,13 @@ namespace MyStickyNotes.controls
 
             StickyNoteSavedEventArgs stickyNoteSavedEventArgs = new StickyNoteSavedEventArgs();
             stickyNoteSavedEventArgs.StickyNoteContent = this.NoteContent;
+
             OnNoteSaved(stickyNoteSavedEventArgs);
+        }
+
+        private void adjustArchivalText()
+        {
+            btnManageArchival.Text = NoteContent.IsArchived ? "Restore" : "Archive";
         }
 
         private void handleBold()
@@ -160,7 +166,7 @@ namespace MyStickyNotes.controls
             Font existing = this.txtContent.SelectionFont;
             Font toApply = null;
 
-            if (existing.Style == FontStyle.Regular) 
+            if (existing.Style == FontStyle.Regular)
             {
                 toApply = new Font(existing, FontStyle.Bold);
             }
@@ -168,7 +174,7 @@ namespace MyStickyNotes.controls
             {
                 toApply = new Font(existing, FontStyle.Regular);
             }
-            
+
             this.txtContent.SelectionFont = toApply;
         }
 
@@ -188,6 +194,29 @@ namespace MyStickyNotes.controls
 
             this.txtContent.SelectionFont = toApply;
         }
+        
+        private void handleGreenText()
+        {
+            if (this.txtContent.SelectionColor != Color.Green)
+            {
+                this.txtContent.SelectionColor = Color.Green;
+            }
+            else
+            {
+                this.txtContent.SelectionColor = Color.Black;
+            }
+        }
 
+        private void handleRedText()
+        {
+            if (this.txtContent.SelectionColor != Color.Red)
+            {
+                this.txtContent.SelectionColor = Color.Red;
+            }
+            else
+            {
+                this.txtContent.SelectionColor = Color.Black;
+            }
+        }
     }
 }

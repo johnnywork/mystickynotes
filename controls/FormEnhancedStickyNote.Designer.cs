@@ -31,6 +31,7 @@
             pnlContent = new Panel();
             txtContent = new RichTextBox();
             pnlTop = new Panel();
+            btnManageArchival = new Button();
             txtTitle = new TextBox();
             btnSave = new Button();
             pnlContent.SuspendLayout();
@@ -43,7 +44,7 @@
             pnlContent.Dock = DockStyle.Fill;
             pnlContent.Location = new Point(0, 22);
             pnlContent.Name = "pnlContent";
-            pnlContent.Size = new Size(329, 248);
+            pnlContent.Size = new Size(330, 222);
             pnlContent.TabIndex = 11;
             // 
             // txtContent
@@ -55,7 +56,7 @@
             txtContent.Font = new Font("Segoe UI", 10F);
             txtContent.Location = new Point(0, 0);
             txtContent.Name = "txtContent";
-            txtContent.Size = new Size(329, 248);
+            txtContent.Size = new Size(330, 222);
             txtContent.TabIndex = 1;
             txtContent.Text = "";
             txtContent.WordWrap = false;
@@ -65,13 +66,25 @@
             // pnlTop
             // 
             pnlTop.BackColor = Color.FromArgb(255, 128, 0);
+            pnlTop.Controls.Add(btnManageArchival);
             pnlTop.Controls.Add(txtTitle);
             pnlTop.Controls.Add(btnSave);
             pnlTop.Dock = DockStyle.Top;
             pnlTop.Location = new Point(0, 0);
             pnlTop.Name = "pnlTop";
-            pnlTop.Size = new Size(329, 22);
+            pnlTop.Size = new Size(330, 22);
             pnlTop.TabIndex = 10;
+            // 
+            // btnManageArchival
+            // 
+            btnManageArchival.Dock = DockStyle.Right;
+            btnManageArchival.Location = new Point(235, 0);
+            btnManageArchival.Name = "btnManageArchival";
+            btnManageArchival.Size = new Size(55, 22);
+            btnManageArchival.TabIndex = 3;
+            btnManageArchival.Text = "restore";
+            btnManageArchival.UseVisualStyleBackColor = true;
+            btnManageArchival.Click += btnManageArchival_Click;
             // 
             // txtTitle
             // 
@@ -81,7 +94,7 @@
             txtTitle.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtTitle.Location = new Point(0, 0);
             txtTitle.Name = "txtTitle";
-            txtTitle.Size = new Size(289, 22);
+            txtTitle.Size = new Size(290, 22);
             txtTitle.TabIndex = 0;
             txtTitle.Text = "Note title";
             txtTitle.TextAlign = HorizontalAlignment.Center;
@@ -90,7 +103,7 @@
             // btnSave
             // 
             btnSave.Dock = DockStyle.Right;
-            btnSave.Location = new Point(289, 0);
+            btnSave.Location = new Point(290, 0);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(40, 22);
             btnSave.TabIndex = 2;
@@ -102,7 +115,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(329, 270);
+            ClientSize = new Size(330, 244);
             Controls.Add(pnlContent);
             Controls.Add(pnlTop);
             MaximizeBox = false;
@@ -122,5 +135,6 @@
         private TextBox txtTitle;
         private Button btnSave;
         private RichTextBox txtContent;
+        private Button btnManageArchival;
     }
 }

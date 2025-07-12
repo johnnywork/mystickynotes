@@ -22,5 +22,7 @@ namespace MyStickyNotes.models
 
         public DateTime CreatedAt { get; set; }
         public DateTime? LastUpdatedAt { get; set; }
+
+        public bool IsArchived { get; set; }
     }
 }
