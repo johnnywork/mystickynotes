@@ -25,6 +25,8 @@ namespace MyStickyNotes
         {
             MdiScroller.Install(this);
 
+            this.KeyPreview = true;
+
             if (RootFolder == null)
             {
                 RootFolder = Application.StartupPath;
@@ -82,11 +84,25 @@ namespace MyStickyNotes
                             node.ForeColor = Color.Red;
                             node.NodeFont = FONT_FILTERED_NODE;
                             txtFilterNode.Tag = node.Tag;
+                            node.EnsureVisible();
                         }
                         else
                         {
                             node.ForeColor = tvNotes.ForeColor;
                             node.NodeFont = FONT_REGULAR_TREE;
+
+                            if (node.Tag != null)
+                            {
+                                FormEnhancedStickyNote frm = (FormEnhancedStickyNote)node.Tag;
+                                if (frm.NoteContent != null)
+                                {
+                                    if (frm.NoteContent.PlainText.IndexOf(criteria, StringComparison.CurrentCultureIgnoreCase) > -1)
+                                    {
+                                        node.ForeColor = Color.DarkOrange;
+                                        node.NodeFont = FONT_FILTERED_NODE;
+                                    }
+                                }
+                            }
                         }
                     }
                     else
@@ -98,17 +114,16 @@ namespace MyStickyNotes
             }
             catch (Exception ex) { }
         }
-
         private void txtFilterNode_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 if (txtFilterNode.Tag != null)
                 {
-                    maximizeForm((FormEnhancedStickyNote) txtFilterNode.Tag);
+                    maximizeForm((FormEnhancedStickyNote)txtFilterNode.Tag);
                 }
             }
-            else if(e.KeyCode == Keys.Escape)
+            else if (e.KeyCode == Keys.Escape)
             {
                 txtFilterNode.Text = "";
             }
@@ -184,6 +199,8 @@ namespace MyStickyNotes
             tvNotes.Nodes.Add(tn);
 
             tvNotes.ExpandAll();
+            tvNotes.Nodes[0].EnsureVisible();
+
             tvNotes.EndUpdate();
         }
 
@@ -227,6 +244,21 @@ namespace MyStickyNotes
                     heightCount += frm.Height;
                     columnMaxLeft = frm.Width > columnMaxLeft ? frm.Width : columnMaxLeft;
                 }
+            }
+        }
+
+        private void frmMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.KeyCode == Keys.F3)
+                {
+                    txtFilterNode.Focus();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }

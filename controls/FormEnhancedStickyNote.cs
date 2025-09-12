@@ -21,11 +21,14 @@ namespace MyStickyNotes.controls
         public event EventHandler? StickyNoteSaved;
         public delegate void StickyNoteSavedEventHandler(object sender, StickyNoteSavedEventArgs e);
 
+        private bool OnInitMode = false;
+        private bool PendingSave = false;
         public StickyNoteContent? NoteContent { get; set; }
         private NotesManager? NotesManager { get; set; }
 
         private FormEnhancedStickyNote()
         {
+            OnInitMode = true;
             InitializeComponent();
             this.NoteContent = null;
             this.NotesManager = null;
@@ -44,6 +47,7 @@ namespace MyStickyNotes.controls
         private void FormEnhancedStickyNote_Load(object sender, EventArgs e)
         {
             init();
+            OnInitMode = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -150,6 +154,8 @@ namespace MyStickyNotes.controls
             this.txtTitle.BackColor = Color.LightGray;
             this.Text = TITLE + " - [" + DateTime.Now.ToString(DATETIME_FORMAT) + "]";
 
+            txtTitle.BackColor = Color.FromArgb(223, 235, 209);
+
             StickyNoteSavedEventArgs stickyNoteSavedEventArgs = new StickyNoteSavedEventArgs();
             stickyNoteSavedEventArgs.StickyNoteContent = this.NoteContent;
             OnNoteSaved(stickyNoteSavedEventArgs);
@@ -160,7 +166,7 @@ namespace MyStickyNotes.controls
             Font existing = this.txtContent.SelectionFont;
             Font toApply = null;
 
-            if (existing.Style == FontStyle.Regular) 
+            if (existing.Style == FontStyle.Regular)
             {
                 toApply = new Font(existing, FontStyle.Bold);
             }
@@ -168,7 +174,7 @@ namespace MyStickyNotes.controls
             {
                 toApply = new Font(existing, FontStyle.Regular);
             }
-            
+
             this.txtContent.SelectionFont = toApply;
         }
 
@@ -189,5 +195,23 @@ namespace MyStickyNotes.controls
             this.txtContent.SelectionFont = toApply;
         }
 
+        private void putInEditMode()
+        {
+            if (!this.OnInitMode)
+            {
+                PendingSave = true;
+                txtTitle.BackColor = Color.FromArgb(255,224,201);
+            }    
+        }
+
+        private void txtContent_TextChanged(object sender, EventArgs e)
+        {
+            putInEditMode();
+        }
+
+        private void txtTitle_TextChanged(object sender, EventArgs e)
+        {
+            putInEditMode();
+        }
     }
 }

@@ -41,9 +41,10 @@
             // 
             pnlContent.Controls.Add(txtContent);
             pnlContent.Dock = DockStyle.Fill;
-            pnlContent.Location = new Point(0, 22);
+            pnlContent.Location = new Point(0, 29);
+            pnlContent.Margin = new Padding(3, 4, 3, 4);
             pnlContent.Name = "pnlContent";
-            pnlContent.Size = new Size(329, 248);
+            pnlContent.Size = new Size(376, 331);
             pnlContent.TabIndex = 11;
             // 
             // txtContent
@@ -54,12 +55,14 @@
             txtContent.Dock = DockStyle.Fill;
             txtContent.Font = new Font("Segoe UI", 10F);
             txtContent.Location = new Point(0, 0);
+            txtContent.Margin = new Padding(3, 4, 3, 4);
             txtContent.Name = "txtContent";
-            txtContent.Size = new Size(329, 248);
+            txtContent.Size = new Size(376, 331);
             txtContent.TabIndex = 1;
             txtContent.Text = "";
             txtContent.WordWrap = false;
             txtContent.LinkClicked += txtContent_LinkClicked;
+            txtContent.TextChanged += txtContent_TextChanged;
             txtContent.KeyDown += txtContent_KeyDown;
             // 
             // pnlTop
@@ -69,8 +72,9 @@
             pnlTop.Controls.Add(btnSave);
             pnlTop.Dock = DockStyle.Top;
             pnlTop.Location = new Point(0, 0);
+            pnlTop.Margin = new Padding(3, 4, 3, 4);
             pnlTop.Name = "pnlTop";
-            pnlTop.Size = new Size(329, 22);
+            pnlTop.Size = new Size(376, 29);
             pnlTop.TabIndex = 10;
             // 
             // txtTitle
@@ -80,19 +84,22 @@
             txtTitle.Dock = DockStyle.Fill;
             txtTitle.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtTitle.Location = new Point(0, 0);
+            txtTitle.Margin = new Padding(3, 4, 3, 4);
             txtTitle.Name = "txtTitle";
-            txtTitle.Size = new Size(289, 22);
+            txtTitle.Size = new Size(330, 26);
             txtTitle.TabIndex = 0;
             txtTitle.Text = "Note title";
             txtTitle.TextAlign = HorizontalAlignment.Center;
             txtTitle.WordWrap = false;
+            txtTitle.TextChanged += txtTitle_TextChanged;
             // 
             // btnSave
             // 
             btnSave.Dock = DockStyle.Right;
-            btnSave.Location = new Point(289, 0);
+            btnSave.Location = new Point(330, 0);
+            btnSave.Margin = new Padding(3, 4, 3, 4);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(40, 22);
+            btnSave.Size = new Size(46, 29);
             btnSave.TabIndex = 2;
             btnSave.Text = "save";
             btnSave.UseVisualStyleBackColor = true;
@@ -100,11 +107,13 @@
             // 
             // FormEnhancedStickyNote
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(329, 270);
+            ClientSize = new Size(376, 360);
+            ControlBox = false;
             Controls.Add(pnlContent);
             Controls.Add(pnlTop);
+            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "FormEnhancedStickyNote";
             Text = "Sticky message";
