@@ -31,6 +31,7 @@
             pnlContent = new Panel();
             txtContent = new RichTextBox();
             pnlTop = new Panel();
+            btnManageArchival = new Button();
             txtTitle = new TextBox();
             btnSave = new Button();
             pnlContent.SuspendLayout();
@@ -44,7 +45,7 @@
             pnlContent.Location = new Point(0, 29);
             pnlContent.Margin = new Padding(3, 4, 3, 4);
             pnlContent.Name = "pnlContent";
-            pnlContent.Size = new Size(376, 331);
+            pnlContent.Size = new Size(330, 222);
             pnlContent.TabIndex = 11;
             // 
             // txtContent
@@ -57,7 +58,7 @@
             txtContent.Location = new Point(0, 0);
             txtContent.Margin = new Padding(3, 4, 3, 4);
             txtContent.Name = "txtContent";
-            txtContent.Size = new Size(376, 331);
+            txtContent.Size = new Size(330, 222);
             txtContent.TabIndex = 1;
             txtContent.Text = "";
             txtContent.WordWrap = false;
@@ -68,6 +69,7 @@
             // pnlTop
             // 
             pnlTop.BackColor = Color.FromArgb(255, 128, 0);
+            pnlTop.Controls.Add(btnManageArchival);
             pnlTop.Controls.Add(txtTitle);
             pnlTop.Controls.Add(btnSave);
             pnlTop.Dock = DockStyle.Top;
@@ -76,6 +78,17 @@
             pnlTop.Name = "pnlTop";
             pnlTop.Size = new Size(376, 29);
             pnlTop.TabIndex = 10;
+            // 
+            // btnManageArchival
+            // 
+            btnManageArchival.Dock = DockStyle.Right;
+            btnManageArchival.Location = new Point(235, 0);
+            btnManageArchival.Name = "btnManageArchival";
+            btnManageArchival.Size = new Size(55, 22);
+            btnManageArchival.TabIndex = 3;
+            btnManageArchival.Text = "restore";
+            btnManageArchival.UseVisualStyleBackColor = true;
+            btnManageArchival.Click += btnManageArchival_Click;
             // 
             // txtTitle
             // 
@@ -131,5 +144,6 @@
         private TextBox txtTitle;
         private Button btnSave;
         private RichTextBox txtContent;
+        private Button btnManageArchival;
     }
 }

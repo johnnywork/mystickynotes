@@ -11,10 +11,10 @@ namespace MyStickyNotes.controls
     internal class FormsManager
     {
         private NotesManager notesManager;
-        private Form mdiParent;
+        private frmMain mdiParent;
         private List<FormEnhancedStickyNote> noteForms;
 
-        public FormsManager(Form mdiParent, NotesManager notesManager)
+        public FormsManager(frmMain mdiParent, NotesManager notesManager)
         {
             this.mdiParent = mdiParent;
             this.noteForms = new List<FormEnhancedStickyNote>(50);
@@ -39,6 +39,7 @@ namespace MyStickyNotes.controls
         public FormEnhancedStickyNote createNoteForm(StickyNoteContent noteContent)
         {
             FormEnhancedStickyNote frmNote = new FormEnhancedStickyNote(noteContent, notesManager);
+            frmNote.StickyNoteSaved += this.mdiParent.FrmNote_StickyNoteSaved;
             frmNote.MdiParent = this.mdiParent;
 
             noteForms.Add(frmNote);

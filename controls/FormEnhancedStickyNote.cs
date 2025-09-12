@@ -48,6 +48,7 @@ namespace MyStickyNotes.controls
         {
             init();
             OnInitMode = false;
+            adjustArchivalText();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -93,27 +94,25 @@ namespace MyStickyNotes.controls
             }
         }
 
-        private void handleGreenText()
+        private void btnManageArchival_Click(object sender, EventArgs e)
         {
-            if (this.txtContent.SelectionColor != Color.Green)
+            try
             {
-                this.txtContent.SelectionColor = Color.Green;
-            }
-            else
-            {
-                this.txtContent.SelectionColor = Color.Black;
-            }
-        }
+                if (NoteContent.IsArchived)
+                {
+                    NoteContent.IsArchived = false;
+                }
+                else
+                {
+                    NoteContent.IsArchived = true;
+                }
 
-        private void handleRedText()
-        {
-            if (this.txtContent.SelectionColor != Color.Red)
-            {
-                this.txtContent.SelectionColor = Color.Red;
+                save();
+                adjustArchivalText();
             }
-            else
+            catch (Exception ex)
             {
-                this.txtContent.SelectionColor = Color.Black;
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -158,7 +157,13 @@ namespace MyStickyNotes.controls
 
             StickyNoteSavedEventArgs stickyNoteSavedEventArgs = new StickyNoteSavedEventArgs();
             stickyNoteSavedEventArgs.StickyNoteContent = this.NoteContent;
+
             OnNoteSaved(stickyNoteSavedEventArgs);
+        }
+
+        private void adjustArchivalText()
+        {
+            btnManageArchival.Text = NoteContent.IsArchived ? "Restore" : "Archive";
         }
 
         private void handleBold()
@@ -194,6 +199,18 @@ namespace MyStickyNotes.controls
 
             this.txtContent.SelectionFont = toApply;
         }
+        
+        private void handleGreenText()
+        {
+            if (this.txtContent.SelectionColor != Color.Green)
+            {
+                this.txtContent.SelectionColor = Color.Green;
+            }
+            else
+            {
+                this.txtContent.SelectionColor = Color.Black;
+            }
+        }
 
         private void putInEditMode()
         {
@@ -212,6 +229,17 @@ namespace MyStickyNotes.controls
         private void txtTitle_TextChanged(object sender, EventArgs e)
         {
             putInEditMode();
+        }
+        private void handleRedText()
+        {
+            if (this.txtContent.SelectionColor != Color.Red)
+            {
+                this.txtContent.SelectionColor = Color.Red;
+            }
+            else
+            {
+                this.txtContent.SelectionColor = Color.Black;
+            }
         }
     }
 }
